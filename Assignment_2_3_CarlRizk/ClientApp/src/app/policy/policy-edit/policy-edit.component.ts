@@ -48,7 +48,7 @@ export class PolicyEditComponent implements OnInit {
 
 
     if (effectiveDate.value != null && expiryDate.value != null)
-      if (expiryDate.value < effectiveDate.value)
+      if (expiryDate.value <= effectiveDate.value)
         if (!expiryDate.getError('required'))
           expiryDate.setErrors({ 'smallerThanEffectiveDate': true });
 
