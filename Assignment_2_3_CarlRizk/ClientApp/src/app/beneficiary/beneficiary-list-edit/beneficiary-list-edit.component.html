@@ -1,0 +1,25 @@
+<mat-expansion-panel expanded class="mat-elevation-z8">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Beneficiaries
+        </mat-panel-title>
+        <mat-panel-description>
+            {{beneficiaries.length + " beneficiaries"}}
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-list>
+        <mat-list-item *ngFor="let beneficiary of beneficiaries; index as i">
+            <mat-icon [hidden]="rowsValid[i]" color="warn">warning</mat-icon>
+            <app-beneficiary-edit [beneficiary]="beneficiary" (onStateChange)="onBeneficiariesChange(i, $event)">
+            </app-beneficiary-edit>
+            <button mat-mini-fab color="warn" type="button" (click)="onDeleteClick(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-list-item>
+    </mat-list>
+
+    <mat-action-row>
+        <button mat-raised-button type="button" color="primary" (click)="onAddClick()">Add Beneficiary</button>
+    </mat-action-row>
+</mat-expansion-panel>

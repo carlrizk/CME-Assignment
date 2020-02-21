@@ -1,0 +1,32 @@
+<form [formGroup]="beneficiaryFormGroup" class="beneficiary-form">
+
+    <mat-form-field class="space">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" name="name_input" (change)="onBeneficiaryChange()">
+        <mat-error [hidden]="!beneficiaryFormGroup.controls.name.errors?.required">Required.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="space">
+        <mat-label>Relationship</mat-label>
+        <mat-select formControlName="relationship" name="relationship_input" (selectionChange)="onBeneficiaryChange()">
+            <mat-option *ngFor="let relation of relationships" [value]="relation">
+                {{relation}}
+            </mat-option>
+        </mat-select>
+        <mat-error [hidden]="!beneficiaryFormGroup.controls.relationship.errors?.required">Required.</mat-error>
+    </mat-form-field>
+
+    <mat-radio-group formControlName="gender" name="gender_input" class="space" (change)="onBeneficiaryChange()">
+        <mat-radio-button *ngFor='let gender of genders' [value]="gender" class="space">{{gender}}</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field class="space">
+        <mat-label>Birthday</mat-label>
+        <input matInput [matDatepicker]="birthday" formControlName="dateOfBirth" name="birthday_input"
+            (dateChange)="onBeneficiaryChange()">
+        <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
+        <mat-datepicker #birthday></mat-datepicker>
+        <mat-error [hidden]="!beneficiaryFormGroup.controls.dateOfBirth.errors?.required">Required.</mat-error>
+    </mat-form-field>
+
+</form>

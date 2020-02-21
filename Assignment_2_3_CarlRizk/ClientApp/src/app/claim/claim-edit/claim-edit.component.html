@@ -1,0 +1,47 @@
+<div *ngFor="let error of errorMessages">
+    <!-- Server Errors if any -->
+    <mat-label>{{error}}</mat-label>
+    <br>
+</div>
+<mat-spinner [hidden]="!claimForm.pending"></mat-spinner>
+<br>
+
+
+<form [formGroup]="claimForm" (ngSubmit)="onSubmitClick()" novalidate>
+    <mat-label>Policy Number: </mat-label>
+    <mat-form-field>
+        <mat-label>Policy Number</mat-label>
+        <input matInput formControlName="policyNumber">
+        <mat-error [hidden]="!claimForm.controls.policyNumber.errors?.required">Required.
+        </mat-error>
+        <mat-error [hidden]="!claimForm.controls.policyNumber.errors?.notFound">Policy doesn't exist
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-label>Incurred Date: </mat-label>
+    <mat-form-field>
+        <mat-label>Incurred Date</mat-label>
+        <input matInput [matDatepicker]="incurred_date" formControlName="incurredDate">
+        <mat-datepicker-toggle matSuffix [for]="incurred_date"></mat-datepicker-toggle>
+        <mat-datepicker #incurred_date></mat-datepicker>
+        <mat-error [hidden]="!claimForm.controls.incurredDate.errors?.required">Required.
+        </mat-error>
+        <mat-error [hidden]="!claimForm.controls.incurredDate.errors?.expired">Must be before policy expiry date.
+        </mat-error>
+        <mat-error [hidden]="!claimForm.controls.incurredDate.errors?.notStarted">Must be after policy effective date.
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-label>Claimed Amount: </mat-label>
+    <mat-form-field>
+        <mat-label>Claimed Amount</mat-label>
+        <input matInput formControlName="claimedAmount" type="number">
+        <mat-error [hidden]="!claimForm.controls.claimedAmount.errors?.min">Cannot be less than 1.</mat-error>
+        <mat-error [hidden]="!claimForm.controls.claimedAmount.errors?.required">Required.
+        </mat-error>
+    </mat-form-field>
+    <br>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="!claimForm.valid || !canSubmit">Submit
+        Claim</button>
+</form>

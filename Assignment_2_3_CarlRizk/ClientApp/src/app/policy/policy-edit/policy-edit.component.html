@@ -1,0 +1,43 @@
+<div *ngFor="let error of errorMessages">
+    <!-- Server Errors if any -->
+    <mat-label>{{error}}</mat-label>
+    <br>
+</div>
+<form [formGroup]="policyForm" (ngSubmit)="onSubmitClick()" novalidate>
+    <mat-label>Policy Number: </mat-label>
+    <mat-form-field>
+        <mat-label>Policy Number</mat-label>
+        <input matInput formControlName="policyNumber">
+    </mat-form-field>
+    <br>
+    <mat-label>Effective Date: </mat-label>
+    <mat-form-field>
+        <mat-label>Effective Date</mat-label>
+        <input matInput [matDatepicker]="effective_date" formControlName="effectiveDate">
+        <mat-datepicker-toggle matSuffix [for]="effective_date"></mat-datepicker-toggle>
+        <mat-datepicker #effective_date></mat-datepicker>
+        <mat-error [hidden]="!policyForm.controls.effectiveDate.errors?.required">Required.</mat-error>
+        <mat-error [hidden]="!policyForm.controls.effectiveDate.errors?.smallerThanToday">Cannot be smaller than today.
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-label>Expiry Date: </mat-label>
+    <mat-form-field>
+        <mat-label>Expiry Date</mat-label>
+        <input matInput [matDatepicker]="expiry_date" formControlName="expiryDate">
+        <mat-datepicker-toggle matSuffix [for]="expiry_date"></mat-datepicker-toggle>
+        <mat-datepicker #expiry_date></mat-datepicker>
+        <mat-error [hidden]="!policyForm.controls.expiryDate.errors?.required">Required.</mat-error>
+        <mat-error [hidden]="!policyForm.controls.expiryDate.errors?.smallerThanToday">Cannot be smaller than today.
+        </mat-error>
+        <mat-error [hidden]="!policyForm.controls.expiryDate.errors?.smallerThanEffectiveDate">Cannot be smaller than
+            Effective Date.</mat-error>
+    </mat-form-field>
+    <br>
+    <app-beneficiary-list-edit [beneficiaries]="policy.beneficiaries" (onStateChange)="onPolicyChange($event)">
+    </app-beneficiary-list-edit>
+    <br>
+    <button mat-raised-button color="primary" type="submit"
+        [disabled]="!canSubmit || !policyForm.valid || !beneficariesValid">Submit
+        Policy</button>
+</form>

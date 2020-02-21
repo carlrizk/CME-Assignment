@@ -1,0 +1,10 @@
+<div *ngIf="claim">
+    <mat-label>ID: </mat-label>
+    <mat-label>{{claim.id}}</mat-label><br>
+    <mat-label>Incurred Date: </mat-label>
+    <mat-label>{{claim.incurredDate | date: 'dd-MMM-yyyy'}}</mat-label><br>
+    <mat-label>Policy No: </mat-label>
+    <mat-label>{{claim.policyNumber}}</mat-label><br>
+    <mat-label>Claimed Amount: </mat-label>
+    <mat-label>{{claim.claimedAmount | currency}}</mat-label><br>
+</div>

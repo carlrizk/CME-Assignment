@@ -1,0 +1,32 @@
+<div *ngFor="let error of errorMessages">
+    <!-- Server Errors if any -->
+    <mat-label>{{error}}</mat-label>
+    <br>
+</div>
+<form (ngSubmit)="refreshTable()" [formGroup]="claimFilterForm">
+    <mat-label>Policy Number: </mat-label>
+    <mat-form-field>
+        <mat-label>Policy Number</mat-label>
+        <input matInput formControlName="policyNumber">
+    </mat-form-field>
+    <br>
+    <mat-label>Amount From: </mat-label>
+    <mat-form-field>
+        <mat-label>Amount From</mat-label>
+        <input matInput formControlName="amountFrom" type="number">
+        <mat-error [hidden]="!claimFilterForm.controls.amountFrom.errors?.negative">Cannot be negative.</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-label>Amount To: </mat-label>
+    <mat-form-field>
+        <mat-label>Amount To</mat-label>
+        <input matInput formControlName="amountTo" type="number">
+        <mat-error [hidden]="!claimFilterForm.controls.amountTo.errors?.negative">Cannot be negative.</mat-error>
+        <mat-error [hidden]="!claimFilterForm.controls.amountTo.errors?.amountToSmallerThanAmountFrom">Amount To cannot be smaller than Amount From.</mat-error>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!claimFilterForm.valid">Filter</button>
+</form>
+
+<app-claim-grid [claims]="claims" (deleteClicked)="onDeleteClick($event)"></app-claim-grid>
+<button mat-raised-button color="primary" [routerLink]="['/claims/new']">Submit Claim</button>
